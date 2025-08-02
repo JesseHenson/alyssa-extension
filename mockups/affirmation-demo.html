@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affirmation Manager Demo - Cosmic Tab Coach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .affirmation-display {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            min-height: 120px;
+        }
+
+        .affirmation-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .affirmation-meta {
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 0.8rem;
+        }
+
+        .category-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .button.secondary {
+            background: rgba(102, 126, 234, 0.2);
+            color: #333;
+        }
+
+        .stats-panel {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .category-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .category-option {
+            background: rgba(102, 126, 234, 0.2);
+            border: 2px solid transparent;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .category-option:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        .category-option.selected {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .search-result {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-result:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .search-result-text {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Gallery</a>
+
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Affirmation Manager Demo</h1>
+            <p>
+                Demonstration of the JSON-based affirmation system with 500+ curated affirmations across 12 categories. 
+                This shows the foundation before AI-powered personalization is added.
+            </p>
+        </div>
+
+        <div class="demo-grid">
+            <!-- Random Affirmation Panel -->
+            <div class="demo-panel">
+                <div class="panel-title">🎲 Random Selection</div>
+                <div class="affirmation-display" id="randomDisplay">
+                    <div class="loading">Loading affirmations...</div>
+                </div>
+                <button class="button" onclick="getRandomAffirmation()">
+                    ✨ New Random Affirmation
+                </button>
+                <button class="button secondary" onclick="getPersonalizedAffirmation()">
+                    🎯 Personalized
+                </button>
+            </div>
+
+            <!-- Category Selection Panel -->
+            <div class="demo-panel">
+                <div class="panel-title">🎨 Category Selection</div>
+                <div class="category-selector" id="categorySelector">
+                    <!-- Categories will be populated here -->
+                </div>
+                <div class="affirmation-display" id="categoryDisplay">
+                    <div class="loading">Select a category above</div>
+                </div>
+            </div>
+
+            <!-- Theme-Based Panel -->
+            <div class="demo-panel">
+                <div class="panel-title">🖼️ Theme-Based Affirmations</div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    Affirmations matched to visual themes for cohesive experience
+                </p>
+                <button class="button secondary" onclick="getThemedAffirmation('cosmic')">🌌 Cosmic</button>
+                <button class="button secondary" onclick="getThemedAffirmation('nature')">🌿 Nature</button>
+                <button class="button secondary" onclick="getThemedAffirmation('sunset')">🌅 Sunset</button>
+                <button class="button secondary" onclick="getThemedAffirmation('ocean')">🌊 Ocean</button>
+                <div class="affirmation-display" id="themeDisplay">
+                    <div class="loading">Select a theme above</div>
+                </div>
+            </div>
+
+            <!-- Search Panel -->
+            <div class="demo-panel">
+                <div class="panel-title">🔍 Search Affirmations</div>
+                <input type="text" 
+                       class="search-box" 
+                       id="searchBox" 
+                       placeholder="Search for keywords like 'strength', 'peace', 'cosmic'..."
+                       oninput="searchAffirmations()">
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Panel -->
+        <div class="demo-panel stats-panel">
+            <div class="panel-title">📊 Content Statistics</div>
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/affirmation-manager.js"></script>
+    <script>
+        let affirmationManager;
+        let selectedCategory = null;
+
+        // Initialize the demo
+        async function initDemo() {
+            affirmationManager = new AffirmationManager();
+            
+            try {
+                await affirmationManager.loadAffirmations('../data/affirmations.json');
+                populateCategories();
+                updateStats();
+                getRandomAffirmation();
+            } catch (error) {
+                console.error('Failed to initialize demo:', error);
+                document.getElementById('randomDisplay').innerHTML = `
+                    <div style="color: #e74c3c;">
+                        <strong>Error loading affirmations</strong><br>
+                        <small>Using fallback content</small>
+                    </div>
+                `;
+                getRandomAffirmation(); // Will use fallback
+            }
+        }
+
+        function populateCategories() {
+            const categories = affirmationManager.getCategories();
+            const selector = document.getElementById('categorySelector');
+            
+            selector.innerHTML = categories.map(cat => `
+                <div class="category-option" 
+                     onclick="selectCategory('${cat.key}')" 
+                     title="${cat.description}">
+                    ${cat.name} (${cat.count})
+                </div>
+            `).join('');
+        }
+
+        function selectCategory(categoryKey) {
+            selectedCategory = categoryKey;
+            
+            // Update visual selection
+            document.querySelectorAll('.category-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            // Get affirmation from selected category
+            const affirmation = affirmationManager.getAffirmationByCategory(categoryKey);
+            displayAffirmation(affirmation, 'categoryDisplay');
+        }
+
+        function getRandomAffirmation() {
+            const affirmation = affirmationManager.getRandomAffirmation();
+            displayAffirmation(affirmation, 'randomDisplay');
+        }
+
+        function getPersonalizedAffirmation() {
+            // Set some sample preferences for demo
+            affirmationManager.updateUserPreferences({
+                categories: ['self_care', 'cosmic_connection', 'inner_strength'],
+                personalizedContent: true
+            });
+            
+            const affirmation = affirmationManager.getPersonalizedAffirmation();
+            displayAffirmation(affirmation, 'randomDisplay');
+        }
+
+        function getThemedAffirmation(theme) {
+            const affirmation = affirmationManager.getThemedAffirmation(theme);
+            displayAffirmation(affirmation, 'themeDisplay');
+        }
+
+        function searchAffirmations() {
+            const keyword = document.getElementById('searchBox').value;
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (keyword.length < 2) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            
+            const results = affirmationManager.searchAffirmations(keyword);
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div style="text-align: center; color: #666; padding: 1rem;">No affirmations found</div>';
+                return;
+            }
+            
+            resultsContainer.innerHTML = results.slice(0, 5).map(affirmation => `
+                <div class="search-result" onclick="displaySearchResult('${affirmation.text.replace(/'/g, "\\'")}', '${affirmation.category}', '${affirmation.categoryKey}')">
+                    <div class="search-result-text">${affirmation.text}</div>
+                    <div class="category-tag">${affirmation.category}</div>
+                </div>
+            `).join('');
+        }
+
+        function displaySearchResult(text, category, categoryKey) {
+            const affirmation = {
+                text: text,
+                category: category,
+                categoryKey: categoryKey
+            };
+            displayAffirmation(affirmation, 'randomDisplay');
+        }
+
+        function displayAffirmation(affirmation, containerId) {
+            const container = document.getElementById(containerId);
+            
+            container.innerHTML = `
+                <div class="affirmation-text">${affirmation.text}</div>
+                <div class="affirmation-meta">
+                    <span class="category-tag">${affirmation.category}</span>
+                    <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+                        Category: ${affirmation.categoryKey} | 
+                        ${affirmation.description || 'Wisdom for your journey'}
+                    </div>
+                </div>
+            `;
+            
+            // Add gentle fade animation
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease';
+                container.style.opacity = '1';
+            }, 100);
+        }
+
+        function updateStats() {
+            const stats = affirmationManager.getStats();
+            const statsGrid = document.getElementById('statsGrid');
+            
+            if (!stats) {
+                statsGrid.innerHTML = '<div class="stat-item">Loading statistics...</div>';
+                return;
+            }
+            
+            statsGrid.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${stats.totalAffirmations}</div>
+                    <div class="stat-label">Total Affirmations</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.categories}</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.version}</div>
+                    <div class="stat-label">Version</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stats.userPreferences.categories.length}</div>
+                    <div class="stat-label">Preferred Categories</div>
+                </div>
+            `;
+        }
+
+        // Auto-refresh demo every 30 seconds
+        setInterval(() => {
+            if (Math.random() < 0.3) { // 30% chance
+                getRandomAffirmation();
+            }
+        }, 30000);
+
+        // Initialize when page loads
+        initDemo();
+    </script>
+</body>
+</html>

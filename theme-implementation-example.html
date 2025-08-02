@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Theme System - Implementation Example</title>
+    <link rel="stylesheet" href="cosmic-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Demo-specific styles */
+        body {
+            margin: 0;
+            padding: var(--space-8);
+            background: var(--gradient-minimal);
+            font-family: var(--font-family-body);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            margin-bottom: var(--space-12);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-6);
+        }
+        
+        .demo-title {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: var(--space-8);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary-500);
+            margin-bottom: var(--space-4);
+        }
+        
+        .theme-switcher {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+        
+        .theme-btn {
+            @apply btn-ghost;
+            margin: var(--space-1);
+            min-width: 100px;
+        }
+        
+        .theme-btn.active {
+            background: var(--gradient-primary);
+            color: var(--color-text-inverse);
+            border-color: transparent;
+        }
+        
+        /* Component Examples */
+        .component-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        
+        .mindful-coach-demo {
+            background: var(--gradient-glass-primary);
+            border-radius: var(--radius-3xl);
+            padding: var(--space-5);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .coach-message-demo {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--color-text-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-3) var(--space-4);
+            margin-bottom: var(--space-3);
+            font-size: var(--font-size-md);
+            position: relative;
+        }
+        
+        .coach-message-demo::before {
+            content: '🌟';
+            position: absolute;
+            left: calc(-1 * var(--space-6));
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: var(--font-size-base);
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--space-3);
+        }
+        
+        .color-swatch {
+            text-align: center;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .color-preview {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+        }
+        
+        .color-label {
+            padding: var(--space-2);
+            background: var(--color-bg-primary);
+            font-size: var(--font-size-xs);
+            font-family: var(--font-family-mono);
+        }
+        
+        .typography-demo {
+            background: var(--color-bg-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .spacing-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        
+        .spacing-box {
+            background: var(--color-primary-500);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-inverse);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            min-width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">🌟 Cosmic Theme System</h1>
+        
+        <!-- Theme Switcher -->
+        <div class="theme-switcher">
+            <button class="theme-btn active" data-theme="cosmic">Cosmic</button>
+            <button class="theme-btn" data-theme="nature">Nature</button>
+            <button class="theme-btn" data-theme="minimal">Minimal</button>
+            <button class="theme-btn" data-theme="sunset">Sunset</button>
+            <button class="theme-btn" data-theme="ocean">Ocean</button>
+        </div>
+        
+        <!-- Button Components -->
+        <div class="demo-section">
+            <h2 class="section-title">Button Components</h2>
+            <div class="component-showcase">
+                <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center;">
+                    <button class="btn-cta">Call to Action</button>
+                    <button class="btn-primary">Primary Button</button>
+                    <button class="btn-secondary">Secondary Button</button>
+                    <button class="btn-ghost">Ghost Button</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Color Palette -->
+        <div class="demo-section">
+            <h2 class="section-title">Color Palette</h2>
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--color-primary-500);">Primary</div>
+                    <div class="color-label">#667eea</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--color-secondary-500);">Secondary</div>
+                    <div class="color-label">#764ba2</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--color-coral-500);">Coral</div>
+                    <div class="color-label">#ff6b6b</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--color-orange-500);">Orange</div>
+                    <div class="color-label">#ee5a24</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--gradient-primary);">Gradient</div>
+                    <div class="color-label">Primary</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-preview" style="background: var(--gradient-cta);">Gradient</div>
+                    <div class="color-label">CTA</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Typography -->
+        <div class="demo-section">
+            <h2 class="section-title">Typography Scale</h2>
+            <div class="typography-demo">
+                <div style="font-family: var(--font-family-heading); font-size: var(--font-size-8xl); font-weight: var(--font-weight-bold); margin-bottom: var(--space-4);">Hero Title</div>
+                <div style="font-family: var(--font-family-heading); font-size: var(--font-size-3xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-3);">Section Heading</div>
+                <div style="font-family: var(--font-family-heading); font-size: var(--font-size-xl); font-weight: var(--font-weight-medium); margin-bottom: var(--space-3);">Subsection</div>
+                <div style="font-family: var(--font-family-body); font-size: var(--font-size-lg); line-height: var(--line-height-relaxed); margin-bottom: var(--space-3);">
+                    This is body text using the Inter font family. It's optimized for readability and works great for paragraphs, descriptions, and UI elements.
+                </div>
+                <div style="font-family: var(--font-family-body); font-size: var(--font-size-md); color: var(--color-text-secondary);">Secondary text in a smaller size with muted color.</div>
+                <div style="font-family: var(--font-family-mono); font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: var(--space-2);">
+                    Code example: var(--color-primary-500)
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cards & Components -->
+        <div class="demo-section">
+            <h2 class="section-title">Card Components</h2>
+            <div class="demo-grid">
+                <div class="card">
+                    <h3 style="font-family: var(--font-family-heading); font-size: var(--font-size-xl); margin-bottom: var(--space-3);">Standard Card</h3>
+                    <p style="color: var(--color-text-secondary); line-height: var(--line-height-relaxed);">
+                        This is a standard card component using the unified theme system. It has consistent padding, border radius, and shadows.
+                    </p>
+                </div>
+                
+                <div class="card-glass">
+                    <h3 style="font-family: var(--font-family-heading); font-size: var(--font-size-xl); margin-bottom: var(--space-3);">Glass Card</h3>
+                    <p style="color: var(--color-text-secondary); line-height: var(--line-height-relaxed);">
+                        This glass card uses backdrop blur and transparency for a modern glassmorphism effect.
+                    </p>
+                </div>
+                
+                <div class="mindful-coach-demo">
+                    <h3 style="font-family: var(--font-family-heading); font-size: var(--font-size-xl); margin-bottom: var(--space-4); color: var(--color-primary-500);">🧘‍♀️ Mindful Coach</h3>
+                    <div class="coach-message-demo">
+                        Hello! I'm here to offer gentle guidance and cosmic wisdom. How are you feeling today?
+                    </div>
+                    <div style="background: var(--gradient-primary); color: var(--color-text-inverse); border-radius: var(--radius-2xl); padding: var(--space-3) var(--space-4); margin-left: 20%; font-size: var(--font-size-md);">
+                        I'm feeling a bit overwhelmed with work today.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Spacing System -->
+        <div class="demo-section">
+            <h2 class="section-title">Spacing System</h2>
+            <div class="card">
+                <div class="spacing-demo">
+                    <div class="spacing-box" style="padding: var(--space-1);">space-1<br>4px</div>
+                    <div class="spacing-box" style="padding: var(--space-2);">space-2<br>8px</div>
+                    <div class="spacing-box" style="padding: var(--space-3);">space-3<br>12px</div>
+                    <div class="spacing-box" style="padding: var(--space-4);">space-4<br>16px</div>
+                    <div class="spacing-box" style="padding: var(--space-5);">space-5<br>20px</div>
+                    <div class="spacing-box" style="padding: var(--space-6);">space-6<br>24px</div>
+                    <div class="spacing-box" style="padding: var(--space-8);">space-8<br>32px</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Form Elements -->
+        <div class="demo-section">
+            <h2 class="section-title">Form Elements</h2>
+            <div class="card">
+                <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px;">
+                    <input class="input" type="text" placeholder="Your name" />
+                    <input class="input" type="email" placeholder="your@email.com" />
+                    <textarea class="input" rows="3" placeholder="Share your thoughts..."></textarea>
+                    <button class="btn-primary" style="align-self: flex-start;">Submit</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shadows & Elevation -->
+        <div class="demo-section">
+            <h2 class="section-title">Shadow & Elevation Levels</h2>
+            <div class="demo-grid">
+                <div style="background: var(--color-bg-primary); padding: var(--space-4); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
+                    <strong>Small</strong><br>shadow-sm
+                </div>
+                <div style="background: var(--color-bg-primary); padding: var(--space-4); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); text-align: center;">
+                    <strong>Medium</strong><br>shadow-md
+                </div>
+                <div style="background: var(--color-bg-primary); padding: var(--space-4); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); text-align: center;">
+                    <strong>Large</strong><br>shadow-lg
+                </div>
+                <div style="background: var(--color-bg-primary); padding: var(--space-4); border-radius: var(--radius-lg); box-shadow: var(--shadow-primary); text-align: center;">
+                    <strong>Primary</strong><br>shadow-primary
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Theme switching functionality
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const body = document.body;
+        
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const theme = button.dataset.theme;
+                
+                // Update active button
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Update body class
+                body.className = body.className.replace(/\btheme-\w+\b/g, '');
+                body.classList.add(`theme-${theme}`);
+                
+                // Update body background gradient
+                const gradients = {
+                    cosmic: 'var(--gradient-cosmic)',
+                    nature: 'var(--gradient-nature)', 
+                    minimal: 'var(--gradient-minimal)',
+                    sunset: 'var(--gradient-sunset)',
+                    ocean: 'var(--gradient-ocean)'
+                };
+                
+                body.style.background = gradients[theme];
+            });
+        });
+        
+        // Set initial theme
+        body.classList.add('theme-cosmic');
+        body.style.background = 'var(--gradient-cosmic)';
+        
+        // Hover effects for interactive elements
+        document.querySelectorAll('.card, .card-glass').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.boxShadow = 'var(--shadow-xl)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = card.classList.contains('card-glass') ? 'var(--shadow-glass)' : 'var(--shadow-lg)';
+            });
+        });
+        
+        console.log('🌟 Cosmic Theme System Demo loaded!');
+        console.log('Try switching themes and exploring the components.');
+    </script>
+</body>
+</html>

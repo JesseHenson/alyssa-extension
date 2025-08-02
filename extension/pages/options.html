@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach - Settings</title>
+    <link rel="stylesheet" href="../css/options.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="options-container">
+        <!-- Header -->
+        <header class="options-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌟</span>
+                    <h1 class="logo-text">Cosmic Tab Coach</h1>
+                    <span class="version" id="versionText">v1.0.0</span>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="exportDataBtn">
+                        📦 Export Data
+                    </button>
+                    <button class="header-btn primary" id="upgradeBtn">
+                        ✨ Upgrade to Premium
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="options-nav">
+            <button class="nav-item active" data-section="general">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">General</span>
+            </button>
+            <button class="nav-item" data-section="appearance">
+                <span class="nav-icon">🎨</span>
+                <span class="nav-label">Appearance</span>
+            </button>
+            <button class="nav-item" data-section="content">
+                <span class="nav-icon">🤖</span>
+                <span class="nav-label">Content</span>
+            </button>
+            <button class="nav-item" data-section="privacy">
+                <span class="nav-icon">🔒</span>
+                <span class="nav-label">Privacy</span>
+            </button>
+            <button class="nav-item" data-section="about">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-label">About</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="options-main">
+            <!-- General Settings -->
+            <section class="settings-section active" id="general">
+                <div class="section-header">
+                    <h2>⚙️ General Settings</h2>
+                    <p>Configure basic extension behavior</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Affirmation Frequency</h3>
+                            <p>How often new affirmations appear</p>
+                        </div>
+                        <div class="setting-control">
+                            <select id="frequencySelect" class="select-input">
+                                <option value="auto">Auto refresh (smart timing)</option>
+                                <option value="manual">Manual only</option>
+                                <option value="30s">Every 30 seconds</option>
+                                <option value="1m">Every minute</option>
+                                <option value="5m">Every 5 minutes</option>
+                                <option value="15m">Every 15 minutes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Text Size</h3>
+                            <p>Adjust affirmation text size for readability</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="textSize" value="small">
+                                    <span class="radio-button"></span>
+                                    <span class="radio-text">Small</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="textSize" value="medium">
+                                    <span class="radio-button"></span>
+                                    <span class="radio-text">Medium</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="textSize" value="large">
+                                    <span class="radio-button"></span>
+                                    <span class="radio-text">Large</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Keyboard Shortcuts</h3>
+                            <p>Quick actions using keyboard</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="shortcuts-list">
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Space</span>
+                                    <span class="shortcut-desc">New affirmation</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Ctrl + S</span>
+                                    <span class="shortcut-desc">Open settings</span>
+                                </div>
+                                <div class="shortcut-item">
+                                    <span class="shortcut-key">Esc</span>
+                                    <span class="shortcut-desc">Close modals</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Appearance Settings -->
+            <section class="settings-section" id="appearance">
+                <div class="section-header">
+                    <h2>🎨 Appearance</h2>
+                    <p>Customize the visual experience</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card full-width">
+                        <div class="setting-header">
+                            <h3>Theme Selection</h3>
+                            <p>Choose your visual vibe</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="theme-grid">
+                                <div class="theme-card" data-theme="cosmic">
+                                    <div class="theme-preview cosmic">
+                                        <div class="theme-stars"></div>
+                                        <div class="theme-content">
+                                            <div class="theme-logo">COSMIC</div>
+                                            <div class="theme-sample">You are stardust experiencing the universe</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-info">
+                                        <div class="theme-name">Cosmic Calm</div>
+                                        <div class="theme-desc">Deep space gradients with twinkling stars</div>
+                                    </div>
+                                </div>
+
+                                <div class="theme-card" data-theme="nature">
+                                    <div class="theme-preview nature">
+                                        <div class="theme-content">
+                                            <div class="theme-logo">NATURE</div>
+                                            <div class="theme-sample">Grow like a tree, rooted yet reaching</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-info">
+                                        <div class="theme-name">Nature Serenity</div>
+                                        <div class="theme-desc">Fresh greens and natural tones</div>
+                                    </div>
+                                </div>
+
+                                <div class="theme-card" data-theme="minimal">
+                                    <div class="theme-preview minimal">
+                                        <div class="theme-content">
+                                            <div class="theme-logo">MINIMAL</div>
+                                            <div class="theme-sample">Simplicity is the ultimate sophistication</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-info">
+                                        <div class="theme-name">Minimal Focus</div>
+                                        <div class="theme-desc">Clean, distraction-free design</div>
+                                    </div>
+                                </div>
+
+                                <div class="theme-card" data-theme="auto">
+                                    <div class="theme-preview auto">
+                                        <div class="theme-content">
+                                            <div class="theme-logo">AUTO</div>
+                                            <div class="theme-sample">Adapts to time of day</div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-info">
+                                        <div class="theme-name">Adaptive</div>
+                                        <div class="theme-desc">Changes based on time and mood</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Animation Speed</h3>
+                            <p>Control transition and animation speeds</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="range-slider">
+                                <input type="range" id="animationSpeed" min="0.5" max="2" step="0.1" value="1">
+                                <div class="range-labels">
+                                    <span>Slow</span>
+                                    <span>Normal</span>
+                                    <span>Fast</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Show Navigation</h3>
+                            <p>Display bottom navigation buttons</p>
+                        </div>
+                        <div class="setting-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="showNavigation" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Settings -->
+            <section class="settings-section" id="content">
+                <div class="section-header">
+                    <h2>🤖 Content Preferences</h2>
+                    <p>Customize your affirmation experience</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Personalized Content</h3>
+                            <p>AI-powered content based on your preferences</p>
+                        </div>
+                        <div class="setting-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="personalizedContent">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-card full-width">
+                        <div class="setting-header">
+                            <h3>Preferred Categories</h3>
+                            <p>Choose which types of affirmations you'd like to see more often</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="categories-grid" id="categoriesGrid">
+                                <!-- Categories will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Content Variety</h3>
+                            <p>Balance between familiar and new content</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="range-slider">
+                                <input type="range" id="contentVariety" min="0" max="100" value="70">
+                                <div class="range-labels">
+                                    <span>Familiar</span>
+                                    <span>Balanced</span>
+                                    <span>Exploratory</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Privacy Settings -->
+            <section class="settings-section" id="privacy">
+                <div class="section-header">
+                    <h2>🔒 Privacy & Data</h2>
+                    <p>Control your data and privacy settings</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Data Storage</h3>
+                            <p>All data is stored locally on your device</p>
+                        </div>
+                        <div class="setting-control">
+                            <div class="privacy-info">
+                                <div class="privacy-item">
+                                    <span class="privacy-icon">✅</span>
+                                    <span>No data sent to external servers</span>
+                                </div>
+                                <div class="privacy-item">
+                                    <span class="privacy-icon">✅</span>
+                                    <span>No tracking or analytics</span>
+                                </div>
+                                <div class="privacy-item">
+                                    <span class="privacy-icon">✅</span>
+                                    <span>Complete privacy by design</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Usage Analytics</h3>
+                            <p>Anonymous usage statistics to improve the extension</p>
+                        </div>
+                        <div class="setting-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="anonymousAnalytics">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Clear Data</h3>
+                            <p>Remove all stored preferences and favorites</p>
+                        </div>
+                        <div class="setting-control">
+                            <button class="btn-danger" id="clearDataBtn">
+                                🗑️ Clear All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="settings-section" id="about">
+                <div class="section-header">
+                    <h2>ℹ️ About Cosmic Tab Coach</h2>
+                    <p>Information about the extension and support</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Version Information</h3>
+                        </div>
+                        <div class="setting-control">
+                            <div class="version-info">
+                                <div class="version-item">
+                                    <span class="version-label">Version:</span>
+                                    <span class="version-value" id="aboutVersion">1.0.0</span>
+                                </div>
+                                <div class="version-item">
+                                    <span class="version-label">Last Updated:</span>
+                                    <span class="version-value">January 2024</span>
+                                </div>
+                                <div class="version-item">
+                                    <span class="version-label">Total Affirmations:</span>
+                                    <span class="version-value" id="totalAffirmations">500+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Support & Feedback</h3>
+                        </div>
+                        <div class="setting-control">
+                            <div class="support-links">
+                                <a href="https://cosmic-tab-coach.netlify.app" target="_blank" class="support-link">
+                                    🌐 Website
+                                </a>
+                                <a href="mailto:hello@cosmic-tab-coach.com" class="support-link">
+                                    📧 Contact Support
+                                </a>
+                                <a href="https://github.com/cosmic-tab-coach" target="_blank" class="support-link">
+                                    💻 GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <div class="setting-header">
+                            <h3>Credits & Attribution</h3>
+                        </div>
+                        <div class="setting-control">
+                            <div class="attribution-links">
+                                <p style="font-size: 14px; color: #666; margin-bottom: 8px;">
+                                    <a href="https://www.flaticon.com/free-icons/philosophy" 
+                                       title="philosophy icons" 
+                                       target="_blank" 
+                                       style="color: #667eea; text-decoration: none;">
+                                        Philosophy icons created by Eucalyp - Flaticon
+                                    </a>
+                                </p>
+                                <p style="font-size: 12px; color: #999;">
+                                    Made with ❤️ for mindful browsing
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card full-width">
+                        <div class="setting-header">
+                            <h3>Your Usage Statistics</h3>
+                        </div>
+                        <div class="setting-control">
+                            <div class="stats-grid" id="usageStats">
+                                <!-- Stats will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Save notification -->
+        <div class="save-notification" id="saveNotification">
+            <span class="save-icon">✅</span>
+            <span class="save-text">Settings saved automatically</span>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📦 Export Your Data</h3>
+                <button class="modal-close" id="closeExportModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Export your preferences, favorites, and usage statistics as a JSON file.</p>
+                <div class="export-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked id="exportPreferences">
+                        <span class="checkmark"></span>
+                        <span>Preferences & Settings</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked id="exportFavorites">
+                        <span class="checkmark"></span>
+                        <span>Favorite Affirmations</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="exportStats">
+                        <span class="checkmark"></span>
+                        <span>Usage Statistics</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelExport">Cancel</button>
+                <button class="btn-primary" id="confirmExport">Export Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/affirmation-manager.js"></script>
+    <script src="../js/options.js"></script>
+</body>
+</html>

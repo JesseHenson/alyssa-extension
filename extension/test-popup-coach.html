@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Coach Test</title>
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/mindful-coach.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-title {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="test-title">Popup Mindful Coach Test</h1>
+    
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="logo">
+                <span class="logo-icon">🌟</span>
+                <span class="logo-text">Cosmic Tab Coach</span>
+            </div>
+            <button class="settings-btn" title="Open full settings">
+                ⚙️
+            </button>
+        </div>
+
+        <!-- Quick Affirmation -->
+        <div class="quick-affirmation">
+            <div class="affirmation-text">
+                Your courage shows up exactly when you need it
+            </div>
+            <div class="affirmation-category">
+                INNER STRENGTH & RESILIENCE
+            </div>
+            <button class="refresh-affirmation" title="New affirmation">
+                ✨
+            </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" title="Save to favorites">
+                <span class="action-icon">♡</span>
+                <span class="action-label">Favorite</span>
+            </button>
+            <button class="action-btn" title="Share affirmation">
+                <span class="action-icon">↗</span>
+                <span class="action-label">Share</span>
+            </button>
+            <button class="action-btn" id="mindfulCoachBtn" title="Talk to your mindful coach">
+                <span class="action-icon">🧘‍♀️</span>
+                <span class="action-label">Coach</span>
+            </button>
+            <button class="action-btn" title="Open new cosmic tab">
+                <span class="action-icon">+</span>
+                <span class="action-label">New Tab</span>
+            </button>
+        </div>
+
+        <!-- Quick Settings -->
+        <div class="quick-settings">
+            <div class="setting-row">
+                <label class="setting-label">
+                    <span class="setting-name">Theme</span>
+                    <select class="setting-select">
+                        <option value="cosmic">Cosmic</option>
+                        <option value="nature">Nature</option>
+                        <option value="minimal" selected>Minimal</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <label class="setting-label">
+                    <span class="setting-name">Auto-refresh</span>
+                    <select class="setting-select">
+                        <option value="auto">Auto</option>
+                        <option value="manual">Manual</option>
+                        <option value="30s" selected>30s</option>
+                        <option value="5m">5min</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <label class="setting-label checkbox-setting">
+                    <span class="setting-name">Personalized content</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats-summary">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Tabs opened</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Favorites</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Days active</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindful Coach Section -->
+        <div class="mindful-coach-section" id="mindfulCoachSection">
+            <div class="mindful-coach-header">
+                <h3>🧘‍♀️ Your Mindful Coach</h3>
+                <button class="coach-toggle" id="coachToggle">💬</button>
+            </div>
+            <div class="mindful-coach-chat" id="mindfulCoachChat" style="display: none;">
+                <div class="mindful-coach-messages" id="mindfulCoachMessages">
+                    <div class="mindful-coach-message coach">
+                        Hi there! 🌟 I'm here to help you find your cosmic calm. What's on your mind?
+                    </div>
+                </div>
+                <div class="mindful-coach-input-container">
+                    <input 
+                        type="text" 
+                        class="mindful-coach-input" 
+                        id="mindfulCoachInput"
+                        placeholder="Share what's on your heart..."
+                        maxlength="300"
+                    />
+                    <button class="mindful-coach-send" id="mindfulCoachSend">✨</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="popup-footer">
+            <button class="footer-btn secondary">
+                Full Options
+            </button>
+            <button class="footer-btn primary">
+                ✨ Upgrade
+            </button>
+        </div>
+
+        <!-- Toast notification -->
+        <div class="toast" id="toast">
+            <span>Test message</span>
+        </div>
+    </div>
+
+    <script src="js/mindful-coach.js"></script>
+    <script>
+        // Simple test functionality
+        let mindfulCoach = new MindfulCoach();
+        let isChatOpen = false;
+        let isCoachTyping = false;
+
+        // Toggle coach
+        document.getElementById('coachToggle').addEventListener('click', () => {
+            toggleMindfulCoach();
+        });
+
+        document.getElementById('mindfulCoachBtn').addEventListener('click', () => {
+            toggleMindfulCoach();
+        });
+
+        // Send message
+        document.getElementById('mindfulCoachSend').addEventListener('click', () => {
+            sendCoachMessage();
+        });
+
+        document.getElementById('mindfulCoachInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendCoachMessage();
+            }
+        });
+
+        function toggleMindfulCoach() {
+            const chatContainer = document.getElementById('mindfulCoachChat');
+            const toggleBtn = document.getElementById('coachToggle');
+            
+            isChatOpen = !isChatOpen;
+            
+            if (isChatOpen) {
+                chatContainer.style.display = 'block';
+                toggleBtn.textContent = '×';
+                setTimeout(() => {
+                    document.getElementById('mindfulCoachInput').focus();
+                }, 100);
+            } else {
+                chatContainer.style.display = 'none';
+                toggleBtn.textContent = '💬';
+            }
+        }
+
+        async function sendCoachMessage() {
+            const input = document.getElementById('mindfulCoachInput');
+            const sendBtn = document.getElementById('mindfulCoachSend');
+            
+            if (isCoachTyping) return;
+            
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            input.disabled = true;
+            sendBtn.disabled = true;
+            input.value = '';
+
+            addChatMessage(userMessage, 'user');
+            showCoachTyping();
+
+            try {
+                const result = await mindfulCoach.handleUserInput(userMessage);
+                hideCoachTyping();
+                addChatMessage(result.response, 'coach', result.stressAnalysis);
+            } catch (error) {
+                hideCoachTyping();
+                addChatMessage("I sense some cosmic turbulence. Let's try that again! 🌟", 'coach');
+            } finally {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+                
+                const messagesContainer = document.getElementById('mindfulCoachMessages');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        function addChatMessage(message, role, stressAnalysis = null) {
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mindful-coach-message ${role}`;
+            
+            const formattedMessage = message.replace(/\n/g, '<br>');
+            messageDiv.innerHTML = formattedMessage;
+
+            if (role === 'coach' && stressAnalysis) {
+                const stressLevel = stressAnalysis.level;
+                if (stressLevel > 0.4) {
+                    const stressEmoji = stressLevel > 0.7 ? '🫂' : '💙';
+                    const stressText = `${stressEmoji} ${Math.round(stressLevel * 100)}% stress detected`;
+                    
+                    const stressSpan = document.createElement('div');
+                    stressSpan.style.fontSize = '0.7rem';
+                    stressSpan.style.opacity = '0.8';
+                    stressSpan.style.marginTop = '0.3rem';
+                    stressSpan.textContent = stressText;
+                    messageDiv.appendChild(stressSpan);
+                }
+            }
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showCoachTyping() {
+            if (isCoachTyping) return;
+            
+            isCoachTyping = true;
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'mindful-coach-message coach';
+            typingDiv.id = 'mindfulCoachTyping';
+            typingDiv.style.opacity = '0.7';
+            typingDiv.innerHTML = '🌟 Reflecting...';
+
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideCoachTyping() {
+            isCoachTyping = false;
+            const typingIndicator = document.getElementById('mindfulCoachTyping');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Test the contrast
+        console.log('✨ Popup coach test loaded. Try clicking the coach button or toggle!');
+    </script>
+</body>
+</html>

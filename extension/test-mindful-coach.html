@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Coach Test</title>
+    <link rel="stylesheet" href="css/mindful-coach.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .demo-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+        .demo-btn:hover {
+            transform: translateY(-2px);
+        }
+        .demo-btn.secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+        .stress-indicators {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .features-list {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .features-list h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .features-list ul {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🧘‍♀️ Mindful Coach Demo</h1>
+        
+        <div class="features-list">
+            <h3>✨ What the Mindful Coach Does:</h3>
+            <ul>
+                <li><strong>Stress Detection:</strong> Analyzes your messages for overwhelm, urgency, anxiety patterns</li>
+                <li><strong>Cosmic Wisdom:</strong> Responds with gentle, brand-aligned guidance</li>
+                <li><strong>Wellness Interventions:</strong> Offers breathing exercises, grounding techniques, perspective shifts</li>
+                <li><strong>Guided Sessions:</strong> Interactive mindfulness exercises with step-by-step guidance</li>
+                <li><strong>Conversation Memory:</strong> Tracks patterns to provide better support over time</li>
+            </ul>
+        </div>
+
+        <div class="demo-controls">
+            <button class="demo-btn" onclick="testStressedMessage()">Test: Stressed Message</button>
+            <button class="demo-btn" onclick="testOverwhelmedMessage()">Test: Overwhelmed</button>
+            <button class="demo-btn" onclick="testAnxiousMessage()">Test: Anxious</button>
+            <button class="demo-btn" onclick="testCalmMessage()">Test: Calm Question</button>
+            <button class="demo-btn secondary" onclick="clearChat()">Clear Chat</button>
+        </div>
+
+        <div class="stress-indicators">
+            <div class="mindful-coach-stress-indicator low">😌 Low Stress</div>
+            <div class="mindful-coach-stress-indicator medium">💙 Medium Stress</div>
+            <div class="mindful-coach-stress-indicator high">🫂 High Stress</div>
+        </div>
+
+        <div class="mindful-coach-container">
+            <div class="mindful-coach-header">
+                <div class="mindful-coach-icon">🌟</div>
+                <div>
+                    <div class="mindful-coach-title">Your Cosmic Wellness Guide</div>
+                    <div class="mindful-coach-subtitle">Test the mindful coach responses below</div>
+                </div>
+            </div>
+            
+            <div class="mindful-coach-chat">
+                <div class="mindful-coach-messages" id="mindfulCoachMessages">
+                    <div class="mindful-coach-message coach">
+                        Hello, beautiful soul! 🌟 I'm your Mindful Coach for Cosmic Tab Coach. 
+                        I'm here to offer gentle guidance and cosmic wisdom. 
+                        Try the test buttons above to see how I detect stress and offer support!
+                    </div>
+                </div>
+                
+                <div class="mindful-coach-input-container">
+                    <input 
+                        type="text" 
+                        class="mindful-coach-input" 
+                        id="mindfulCoachInput"
+                        placeholder="Share what's on your heart... (or use test buttons above)"
+                        maxlength="500"
+                    />
+                    <button class="mindful-coach-send" id="mindfulCoachSend">
+                        ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mindful-coach.js"></script>
+    <script>
+        let mindfulCoach = new MindfulCoach();
+        let isTyping = false;
+
+        // Test messages
+        const testMessages = {
+            stressed: "I have 5 deadlines tomorrow and I don't know how I'm going to finish everything on time. I'm so stressed and overwhelmed.",
+            overwhelmed: "I can't handle all of this. Everything is falling apart and I have too many things to do at once. I'm drowning.",
+            anxious: "What if I fail? What if everything goes wrong? I'm so worried about the presentation and I can't stop thinking about all the things that could go wrong.",
+            calm: "I'm curious about meditation and wondering how to start a mindful morning routine."
+        };
+
+        function testStressedMessage() {
+            simulateUserMessage(testMessages.stressed);
+        }
+
+        function testOverwhelmedMessage() {
+            simulateUserMessage(testMessages.overwhelmed);
+        }
+
+        function testAnxiousMessage() {
+            simulateUserMessage(testMessages.anxious);
+        }
+
+        function testCalmMessage() {
+            simulateUserMessage(testMessages.calm);
+        }
+
+        async function simulateUserMessage(message) {
+            if (isTyping) return;
+            
+            // Add user message
+            addChatMessage(message, 'user');
+            
+            // Show typing
+            showCoachTyping();
+            
+            try {
+                // Get coach response
+                const result = await mindfulCoach.handleUserInput(message);
+                
+                // Hide typing
+                hideCoachTyping();
+                
+                // Add coach response
+                addChatMessage(result.response, 'coach', result.stressAnalysis);
+                
+                // Show intervention if suggested
+                if (result.suggestedIntervention) {
+                    showInterventionSuggestion(result.suggestedIntervention);
+                }
+                
+            } catch (error) {
+                hideCoachTyping();
+                addChatMessage("I sense some cosmic turbulence. Let's try that again! 🌟", 'coach');
+            }
+        }
+
+        function addChatMessage(message, role, stressAnalysis = null) {
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `mindful-coach-message ${role}`;
+            
+            const formattedMessage = message.replace(/\n/g, '<br>');
+            messageDiv.innerHTML = formattedMessage;
+
+            // Add stress indicator for coach messages
+            if (role === 'coach' && stressAnalysis) {
+                const stressLevel = stressAnalysis.level;
+                let stressCategory = 'low';
+                let stressEmoji = '😌';
+                
+                if (stressLevel > 0.7) {
+                    stressCategory = 'high';
+                    stressEmoji = '🫂';
+                } else if (stressLevel > 0.4) {
+                    stressCategory = 'medium';
+                    stressEmoji = '💙';
+                }
+                
+                const stressIndicator = document.createElement('div');
+                stressIndicator.className = `mindful-coach-stress-indicator ${stressCategory}`;
+                stressIndicator.innerHTML = `${stressEmoji} ${Math.round(stressLevel * 100)}% stress detected`;
+                messageDiv.appendChild(stressIndicator);
+            }
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showCoachTyping() {
+            if (isTyping) return;
+            isTyping = true;
+            
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'mindful-coach-typing';
+            typingDiv.id = 'mindfulCoachTyping';
+            typingDiv.innerHTML = `
+                <div class="mindful-coach-typing-text">Coach is reflecting...</div>
+                <div class="mindful-coach-typing-dots">
+                    <div class="mindful-coach-typing-dot"></div>
+                    <div class="mindful-coach-typing-dot"></div>
+                    <div class="mindful-coach-typing-dot"></div>
+                </div>
+            `;
+
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideCoachTyping() {
+            isTyping = false;
+            const typingIndicator = document.getElementById('mindfulCoachTyping');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function showInterventionSuggestion(intervention) {
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+            const interventionDiv = document.createElement('div');
+            interventionDiv.className = 'mindful-coach-intervention';
+            interventionDiv.innerHTML = `
+                <h4>🌟 ${intervention.name}</h4>
+                <p>${intervention.description}</p>
+                <p><em>Duration: ${intervention.duration}</em></p>
+                <div class="mindful-coach-intervention-buttons">
+                    <button class="mindful-coach-btn primary" onclick="startIntervention('${intervention.name.toLowerCase().replace(/\s+/g, '_')}')">
+                        ✨ Let's try it
+                    </button>
+                    <button class="mindful-coach-btn secondary" onclick="this.parentElement.parentElement.style.display='none'">
+                        🤚 Maybe later
+                    </button>
+                </div>
+            `;
+
+            messagesContainer.appendChild(interventionDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function startIntervention(interventionType) {
+            const typeMap = {
+                'cosmic_breathing': 'breathing',
+                'cosmic_grounding': 'grounding',
+                'cosmic_perspective': 'perspective', 
+                'cosmic_affirmation': 'affirmation'
+            };
+            
+            const actualType = typeMap[interventionType] || interventionType;
+            const intervention = mindfulCoach.startIntervention(actualType);
+            
+            addChatMessage(`🌟 Starting ${intervention.name}... This would open the guided intervention modal in the actual extension!`, 'coach');
+        }
+
+        function clearChat() {
+            const messagesContainer = document.getElementById('mindfulCoachMessages');
+            messagesContainer.innerHTML = `
+                <div class="mindful-coach-message coach">
+                    Chat cleared! 🌟 Try the test buttons above to see stress detection in action.
+                </div>
+            `;
+            mindfulCoach.clearHistory();
+        }
+
+        // Handle manual input
+        document.getElementById('mindfulCoachSend')?.addEventListener('click', () => {
+            const input = document.getElementById('mindfulCoachInput');
+            const message = input.value.trim();
+            if (message) {
+                input.value = '';
+                simulateUserMessage(message);
+            }
+        });
+
+        document.getElementById('mindfulCoachInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('mindfulCoachInput');
+                const message = input.value.trim();
+                if (message) {
+                    input.value = '';
+                    simulateUserMessage(message);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

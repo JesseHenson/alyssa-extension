@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach - Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .settings-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .setting-group {
+            margin-bottom: 2rem;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .setting-description {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .theme-card {
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card.selected {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .theme-cosmic {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .theme-nature {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .theme-minimal {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        .theme-sunset {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #333;
+        }
+
+        .theme-ocean {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .theme-premium {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            position: relative;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .theme-name {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-preview {
+            height: 40px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .slider-container {
+            margin: 1rem 0;
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            cursor: pointer;
+        }
+
+        .frequency-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .frequency-option {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .frequency-option.selected {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+        }
+
+        .personalization-section {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .premium-feature {
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .premium-overlay {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .save-button {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <a href="cosmic-tab-main.html" class="back-button">← Back to Tab</a>
+
+    <div class="settings-container">
+        <div class="header">
+            <h1>⚙️ Settings</h1>
+            <p>Customize your cosmic journey</p>
+        </div>
+
+        <!-- Basic Settings -->
+        <div class="setting-group">
+            <div class="setting-label">🌟 Show Affirmations</div>
+            <div class="setting-description">Display gentle affirmations on new tabs</div>
+            <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Theme Selection -->
+        <div class="setting-group">
+            <div class="setting-label">🎨 Theme Selection</div>
+            <div class="setting-description">Choose your visual vibe</div>
+            <div class="theme-grid">
+                <div class="theme-card theme-cosmic selected">
+                    <div class="theme-name">Cosmic Calm</div>
+                    <div class="theme-preview">✨ Stars</div>
+                </div>
+                <div class="theme-card theme-nature">
+                    <div class="theme-name">Nature Serenity</div>
+                    <div class="theme-preview">🌿 Leaves</div>
+                </div>
+                <div class="theme-card theme-minimal">
+                    <div class="theme-name">Minimal Focus</div>
+                    <div class="theme-preview">⚪ Clean</div>
+                </div>
+                <div class="theme-card theme-sunset premium-feature">
+                    <div class="premium-badge">PRO</div>
+                    <div class="theme-name">Sunset Glow</div>
+                    <div class="theme-preview">🌅 Warm</div>
+                </div>
+                <div class="theme-card theme-ocean premium-feature">
+                    <div class="premium-badge">PRO</div>
+                    <div class="theme-name">Ocean Breeze</div>
+                    <div class="theme-preview">🌊 Flow</div>
+                </div>
+                <div class="theme-card theme-premium premium-feature">
+                    <div class="premium-badge">PRO</div>
+                    <div class="theme-name">Premium Mix</div>
+                    <div class="theme-preview">🎆 Magic</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Affirmation Frequency -->
+        <div class="setting-group">
+            <div class="setting-label">⏰ Affirmation Frequency</div>
+            <div class="setting-description">How often new affirmations appear</div>
+            <div class="frequency-options">
+                <div class="frequency-option">Every Tab</div>
+                <div class="frequency-option selected">30 Seconds</div>
+                <div class="frequency-option">5 Minutes</div>
+                <div class="frequency-option">Manual</div>
+            </div>
+        </div>
+
+        <!-- Font Size -->
+        <div class="setting-group">
+            <div class="setting-label">📝 Text Size</div>
+            <div class="setting-description">Adjust affirmation text size</div>
+            <div class="slider-container">
+                <input type="range" min="1" max="3" value="2" class="range-slider">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                    <span>Small</span>
+                    <span>Medium</span>
+                    <span>Large</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Personalization Section -->
+        <div class="personalization-section premium-feature">
+            <div class="premium-overlay">PREMIUM</div>
+            <div class="setting-label">🎯 Personalization</div>
+            <div class="setting-description">AI-powered content tailored to your journey</div>
+            
+            <div style="margin: 1rem 0;">
+                <div class="setting-label" style="font-size: 0.9rem;">Current Focus Areas</div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                    <span style="background: rgba(102, 126, 234, 0.2); padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.8rem;">Self-Care</span>
+                    <span style="background: rgba(102, 126, 234, 0.2); padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.8rem;">Work Balance</span>
+                    <span style="background: rgba(102, 126, 234, 0.2); padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.8rem;">Mindfulness</span>
+                </div>
+            </div>
+
+            <div style="margin: 1rem 0;">
+                <div class="setting-label" style="font-size: 0.9rem;">🎵 Audio Affirmations</div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div style="margin: 1rem 0;">
+                <div class="setting-label" style="font-size: 0.9rem;">📊 Wellness Insights</div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Privacy -->
+        <div class="setting-group">
+            <div class="setting-label">🔒 Privacy</div>
+            <div class="setting-description">All data stored locally on your device</div>
+            <div style="background: rgba(76, 175, 80, 0.1); padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                <div style="font-size: 0.8rem; color: #4CAF50;">
+                    ✅ No data sent to external servers<br>
+                    ✅ No tracking or analytics<br>
+                    ✅ Complete privacy by design
+                </div>
+            </div>
+        </div>
+
+        <button class="save-button" onclick="saveSettings()">💫 Save Cosmic Settings</button>
+    </div>
+
+    <script>
+        function saveSettings() {
+            // Add save animation
+            const button = document.querySelector('.save-button');
+            button.textContent = '✨ Saved!';
+            button.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+            
+            setTimeout(() => {
+                button.textContent = '💫 Save Cosmic Settings';
+                button.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            }, 2000);
+        }
+
+        // Theme selection
+        document.querySelectorAll('.theme-card:not(.premium-feature)').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+        });
+
+        // Premium theme selection
+        document.querySelectorAll('.theme-card.premium-feature').forEach(card => {
+            card.addEventListener('click', () => {
+                alert('🌟 Upgrade to Premium\n\nUnlock beautiful premium themes, audio affirmations, and personalized content!\n\n✨ $2.99 one-time or $0.99/month');
+            });
+        });
+
+        // Frequency selection
+        document.querySelectorAll('.frequency-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.frequency-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

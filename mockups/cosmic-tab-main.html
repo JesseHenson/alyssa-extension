@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach - Main Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        /* Cosmic background animations */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            letter-spacing: 2px;
+        }
+
+        .affirmation-container {
+            max-width: 600px;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .affirmation-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: white;
+            line-height: 1.4;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .affirmation-category {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bottom-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-switcher {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .theme-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .theme-cosmic { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .theme-nature { background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%); }
+        .theme-minimal { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+
+        .refresh-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.8rem;
+        }
+
+        .refresh-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Premium badge */
+        .premium-badge {
+            position: absolute;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="refresh-button" onclick="newAffirmation()">
+        ✨ New Affirmation
+    </div>
+
+    <div class="theme-switcher">
+        <div class="theme-option theme-cosmic" onclick="setTheme('cosmic')" title="Cosmic Calm"></div>
+        <div class="theme-option theme-nature" onclick="setTheme('nature')" title="Nature Serenity"></div>
+        <div class="theme-option theme-minimal" onclick="setTheme('minimal')" title="Minimal Focus"></div>
+    </div>
+
+    <div class="premium-badge">
+        Premium ⭐
+    </div>
+
+    <div class="main-content">
+        <div class="logo">COSMIC TAB COACH</div>
+        
+        <div class="affirmation-container">
+            <div class="affirmation-text" id="affirmationText">
+                You are exactly where you need to be in this cosmic moment
+            </div>
+            <div class="affirmation-category" id="affirmationCategory">
+                Present Moment Awareness
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="nav-button" onclick="showSettings()">⚙️ Settings</button>
+            <button class="nav-button" onclick="showBookmarks()">🔖 Bookmarks</button>
+            <button class="nav-button" onclick="showHistory()">📚 History</button>
+            <button class="nav-button" onclick="showUpgrade()">✨ Upgrade</button>
+        </div>
+    </div>
+
+    <script src="../js/affirmation-manager.js"></script>
+    <script>
+        // Initialize affirmation manager
+        let affirmationManager;
+        let currentTheme = 'cosmic';
+        
+        async function initAffirmations() {
+            affirmationManager = new AffirmationManager();
+            
+            try {
+                await affirmationManager.loadAffirmations('../data/affirmations.json');
+                console.log('✨ Affirmations loaded successfully');
+                
+                // Set user preferences for demo
+                affirmationManager.updateUserPreferences({
+                    categories: ['cosmic_connection', 'present_moment', 'self_care'],
+                    personalizedContent: true
+                });
+                
+                // Load initial affirmation
+                newAffirmation();
+            } catch (error) {
+                console.error('Failed to load affirmations:', error);
+                // Fallback will be used automatically
+                newAffirmation();
+            }
+        }
+
+        const themes = {
+            cosmic: {
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                textColor: 'white'
+            },
+            nature: {
+                background: 'linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%)',
+                textColor: 'white'
+            },
+            minimal: {
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                textColor: '#333'
+            }
+        };
+
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function newAffirmation() {
+            let affirmation;
+            
+            if (affirmationManager) {
+                // Get themed affirmation based on current theme
+                affirmation = affirmationManager.getThemedAffirmation(currentTheme);
+            } else {
+                // Fallback if manager not loaded
+                affirmation = {
+                    text: "You are exactly where you need to be in this cosmic moment",
+                    category: "Present Moment Awareness"
+                };
+            }
+            
+            const textElement = document.getElementById('affirmationText');
+            const categoryElement = document.getElementById('affirmationCategory');
+            
+            // Fade out
+            textElement.style.opacity = '0';
+            categoryElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                textElement.textContent = affirmation.text;
+                categoryElement.textContent = affirmation.category;
+                
+                // Fade in
+                textElement.style.opacity = '1';
+                categoryElement.style.opacity = '1';
+            }, 300);
+        }
+
+        function setTheme(themeName) {
+            currentTheme = themeName;
+            const theme = themes[themeName];
+            document.body.style.background = theme.background;
+            document.getElementById('affirmationText').style.color = theme.textColor;
+            
+            // Update stars visibility based on theme
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.style.opacity = themeName === 'minimal' ? '0.1' : '0.8';
+            });
+            
+            // Get a new themed affirmation
+            newAffirmation();
+        }
+
+        function showSettings() {
+            alert('Settings panel would open here!\n\n• Affirmation frequency\n• Theme preferences\n• Personalization options\n• Privacy settings');
+        }
+
+        function showBookmarks() {
+            alert('Quick access to your favorite sites would appear here!');
+        }
+
+        function showHistory() {
+            alert('Recent affirmations and browsing history would show here!');
+        }
+
+        function showUpgrade() {
+            alert('Upgrade to Premium:\n\n✨ 10+ Premium Themes\n🎵 Audio Affirmations\n🎯 Advanced Personalization\n📊 Wellness Insights\n\n$2.99 one-time or $0.99/month');
+        }
+
+        // Initialize
+        createStars();
+        initAffirmations();
+        
+        // Auto-refresh affirmation every 30 seconds with themed content
+        setInterval(() => {
+            if (affirmationManager) {
+                newAffirmation();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach</title>
+    <link rel="stylesheet" href="../css/popup.css">
+    <link rel="stylesheet" href="../css/mindful-coach.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="logo">
+                <span class="logo-icon">🌟</span>
+                <span class="logo-text">Cosmic Tab Coach</span>
+            </div>
+            <button class="settings-btn" id="settingsBtn" title="Open full settings">
+                ⚙️
+            </button>
+        </div>
+
+        <!-- Quick Affirmation -->
+        <div class="quick-affirmation" id="quickAffirmation">
+            <div class="affirmation-text" id="popupAffirmationText">
+                Loading your cosmic moment...
+            </div>
+            <div class="affirmation-category" id="popupAffirmationCategory">
+                Preparing wisdom
+            </div>
+            <button class="refresh-affirmation" id="refreshAffirmation" title="New affirmation">
+                ✨
+            </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" id="favoriteBtn" title="Save to favorites">
+                <span class="action-icon">♡</span>
+                <span class="action-label">Favorite</span>
+            </button>
+            <button class="action-btn" id="shareBtn" title="Share affirmation">
+                <span class="action-icon">↗</span>
+                <span class="action-label">Share</span>
+            </button>
+            <button class="action-btn" id="mindfulCoachBtn" title="Talk to your mindful coach">
+                <span class="action-icon">🧘‍♀️</span>
+                <span class="action-label">Coach</span>
+            </button>
+            <button class="action-btn" id="newTabBtn" title="Open new cosmic tab">
+                <span class="action-icon">+</span>
+                <span class="action-label">New Tab</span>
+            </button>
+        </div>
+
+        <!-- Quick Settings -->
+        <div class="quick-settings">
+            <div class="setting-row">
+                <label class="setting-label">
+                    <span class="setting-name">Theme</span>
+                    <select class="setting-select" id="themeSelect">
+                        <option value="cosmic">Cosmic</option>
+                        <option value="nature">Nature</option>
+                        <option value="minimal">Minimal</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <label class="setting-label">
+                    <span class="setting-name">Auto-refresh</span>
+                    <select class="setting-select" id="frequencySelect">
+                        <option value="auto">Auto</option>
+                        <option value="manual">Manual</option>
+                        <option value="30s">30s</option>
+                        <option value="5m">5min</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <label class="setting-label checkbox-setting">
+                    <span class="setting-name">Personalized content</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="personalizedToggle">
+                        <span class="toggle-slider"></span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="stats-summary" id="statsSummary">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTabs">0</div>
+                    <div class="stat-label">Tabs opened</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalFavorites">0</div>
+                    <div class="stat-label">Favorites</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="daysActive">0</div>
+                    <div class="stat-label">Days active</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindful Coach Section -->
+        <div class="mindful-coach-section" id="mindfulCoachSection">
+            <div class="mindful-coach-header">
+                <h3>🧘‍♀️ Your Mindful Coach</h3>
+                <button class="coach-toggle" id="coachToggle">💬</button>
+            </div>
+            <div class="mindful-coach-chat" id="mindfulCoachChat" style="display: none;">
+                <div class="mindful-coach-messages" id="mindfulCoachMessages">
+                    <div class="mindful-coach-message coach">
+                        Hi there! 🌟 I'm here to help you find your cosmic calm. What's on your mind?
+                    </div>
+                </div>
+                <div class="mindful-coach-input-container">
+                    <input 
+                        type="text" 
+                        class="mindful-coach-input" 
+                        id="mindfulCoachInput"
+                        placeholder="Share what's on your heart..."
+                        maxlength="300"
+                    />
+                    <button class="mindful-coach-send" id="mindfulCoachSend">✨</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="popup-footer">
+            <button class="footer-btn secondary" id="optionsBtn">
+                Full Options
+            </button>
+            <button class="footer-btn primary" id="upgradeBtn">
+                ✨ Upgrade
+            </button>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">🌟</div>
+        </div>
+
+        <!-- Toast notification -->
+        <div class="toast" id="toast">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/affirmation-manager.js"></script>
+    <script src="../js/mindful-coach.js"></script>
+    <script src="../js/popup.js"></script>
+</body>
+</html>

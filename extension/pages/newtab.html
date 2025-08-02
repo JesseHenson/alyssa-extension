@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach</title>
+    <link rel="stylesheet" href="../css/newtab.css">
+    <link rel="stylesheet" href="../css/mindful-coach.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Star field background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Top controls -->
+        <div class="top-controls">
+            <button class="control-button" id="refreshBtn" title="New affirmation">
+                ✨ New
+            </button>
+            
+            <div class="theme-switcher">
+                <button class="theme-option cosmic" data-theme="cosmic" title="Cosmic Calm"></button>
+                <button class="theme-option nature" data-theme="nature" title="Nature Serenity"></button>
+                <button class="theme-option minimal" data-theme="minimal" title="Minimal Focus"></button>
+            </div>
+            
+            <button class="control-button" id="settingsBtn" title="Settings">
+                ⚙️
+            </button>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo">COSMIC TAB COACH</div>
+        
+        <!-- Affirmation display -->
+        <div class="affirmation-container">
+            <div class="affirmation-text" id="affirmationText">
+                Loading your cosmic moment...
+            </div>
+            <div class="affirmation-category" id="affirmationCategory">
+                Preparing wisdom
+            </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+            <button class="action-button" id="favoriteBtn" title="Save to favorites">
+                ♡
+            </button>
+            <button class="action-button" id="shareBtn" title="Share this affirmation">
+                ↗
+            </button>
+            <button class="action-button" id="skipBtn" title="Skip to next">
+                →
+            </button>
+        </div>
+
+        <!-- Bottom navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-link" id="bookmarksBtn">
+                <span class="nav-icon">🔖</span>
+                <span class="nav-label">Bookmarks</span>
+            </a>
+            <a href="#" class="nav-link" id="historyBtn">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">History</span>
+            </a>
+            <a href="#" class="nav-link" id="mindfulCoachBtn">
+                <span class="nav-icon">🧘‍♀️</span>
+                <span class="nav-label">Mindful Coach</span>
+            </a>
+            <a href="#" class="nav-link" id="appsBtn">
+                <span class="nav-icon">⚡</span>
+                <span class="nav-label">Apps</span>
+            </a>
+            <a href="#" class="nav-link" id="upgradeBtn">
+                <span class="nav-icon">✨</span>
+                <span class="nav-label">Upgrade</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Premium badge -->
+    <div class="premium-badge" id="premiumBadge" style="display: none;">
+        Premium ⭐
+    </div>
+
+    <!-- Mindful Coach Modal -->
+    <div class="modal-overlay" id="mindfulCoachModal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh;">
+            <div class="modal-header">
+                <h2>🧘‍♀️ Mindful Coach</h2>
+                <button class="close-btn" id="closeMindfulCoach">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="mindful-coach-container">
+                    <div class="mindful-coach-header">
+                        <div class="mindful-coach-icon">🌟</div>
+                        <div>
+                            <div class="mindful-coach-title">Your Cosmic Wellness Guide</div>
+                            <div class="mindful-coach-subtitle">Ask me anything - I'm here with gentle wisdom</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mindful-coach-chat">
+                        <div class="mindful-coach-messages" id="mindfulCoachMessages">
+                            <div class="mindful-coach-message coach">
+                                Hello, beautiful soul! 🌟 I'm here to offer gentle guidance and cosmic wisdom. 
+                                What's on your mind today? Whether you're feeling overwhelmed, have questions, 
+                                or just need a mindful moment, I'm here to support you with loving awareness.
+                            </div>
+                        </div>
+                        
+                        <div class="mindful-coach-input-container">
+                            <input 
+                                type="text" 
+                                class="mindful-coach-input" 
+                                id="mindfulCoachInput"
+                                placeholder="Share what's on your heart..."
+                                maxlength="500"
+                            />
+                            <button class="mindful-coach-send" id="mindfulCoachSend">
+                                ✨
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mindful Coach Floating Toggle -->
+    <button class="mindful-coach-toggle" id="mindfulCoachToggle" title="Open Mindful Coach">
+        🧘‍♀️
+    </button>
+
+    <!-- Settings modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Quick Settings</h2>
+                <button class="close-btn" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <span>Theme</span>
+                        <select id="themeSelect">
+                            <option value="cosmic">Cosmic Calm</option>
+                            <option value="nature">Nature Serenity</option>
+                            <option value="minimal">Minimal Focus</option>
+                            <option value="auto">Auto (Time-based)</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <span>Affirmation Frequency</span>
+                        <select id="frequencySelect">
+                            <option value="auto">Auto refresh</option>
+                            <option value="manual">Manual only</option>
+                            <option value="30s">Every 30 seconds</option>
+                            <option value="5m">Every 5 minutes</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <span>Text Size</span>
+                        <select id="textSizeSelect">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label checkbox-label">
+                        <input type="checkbox" id="personalizedCheck">
+                        <span class="checkmark"></span>
+                        <span>Personalized content</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="optionsBtn">Full Options</button>
+                <button class="btn-primary" id="saveSettingsBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorite confirmation -->
+    <div class="toast" id="favoriteToast">
+        <span>💫 Added to favorites</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/affirmation-manager.js"></script>
+    <script src="../js/mindful-coach.js"></script>
+    <script src="../js/newtab.js"></script>
+</body>
+</html>

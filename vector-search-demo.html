@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector Search Demo - Cosmic Tab Coach</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .results-container {
+            margin-top: 1.5rem;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .affirmation-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .metadata {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .score {
+            background: rgba(76, 175, 80, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+        }
+
+        .category {
+            background: rgba(103, 126, 234, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+        }
+
+        .themes {
+            background: rgba(255, 107, 107, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+        }
+
+        .example-queries {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .example-query {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .example-query:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .status {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .status.loading {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .fallback-notice {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #FFC107;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧘‍♀️ Vector Search Demo</h1>
+        
+        <div class="intro">
+            <h3>✨ Semantic Affirmation Search</h3>
+            <p>This demo shows how the new vector database finds affirmations that match the <strong>meaning</strong> of your words, not just exact text matches. Try describing your feelings naturally!</p>
+        </div>
+
+        <div class="demo-section">
+            <h3>🔍 Try Some Examples</h3>
+            <div class="example-queries">
+                <div class="example-query" onclick="searchExample('feeling overwhelmed with work deadlines')">
+                    📊 Work Overwhelm
+                </div>
+                <div class="example-query" onclick="searchExample('need confidence for big presentation')">
+                    🎤 Presentation Nerves
+                </div>
+                <div class="example-query" onclick="searchExample('struggling with self-doubt')">
+                    💭 Self-Doubt
+                </div>
+                <div class="example-query" onclick="searchExample('anxious about making important decision')">
+                    🤔 Decision Anxiety
+                </div>
+                <div class="example-query" onclick="searchExample('exhausted from taking care of everyone else')">
+                    🫂 Caregiver Burnout
+                </div>
+                <div class="example-query" onclick="searchExample('feeling disconnected and lonely')">
+                    😔 Feeling Isolated
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="searchInput" placeholder="Describe how you're feeling or what you need..." value="">
+                <button onclick="performSearch()">🔍 Search</button>
+            </div>
+
+            <div id="statusContainer"></div>
+            <div id="resultsContainer" class="results-container"></div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🤖 How It Works</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem;">✅ <strong>Semantic Understanding:</strong> Finds affirmations by meaning, not keywords</li>
+                <li style="margin-bottom: 0.5rem;">✅ <strong>Stress-Aware:</strong> Adapts to your emotional state</li>
+                <li style="margin-bottom: 0.5rem;">✅ <strong>Theme Matching:</strong> Maps your situation to relevant categories</li>
+                <li style="margin-bottom: 0.5rem;">✅ <strong>Relevance Scoring:</strong> Shows most relevant matches first</li>
+                <li style="margin-bottom: 0.5rem;">✅ <strong>Privacy-First:</strong> Works locally when possible</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Mock affirmations for demo (subset of real data)
+        const mockAffirmations = [
+            {
+                id: "work_balance_1",
+                text: "You bring cosmic balance to your work and life with graceful intention",
+                category: "Work-Life Harmony",
+                themes: ["balance", "harmony", "professional"],
+                emotional_tags: ["balanced", "harmonious", "productive", "calm", "focused"],
+                relevance_score: 0.95
+            },
+            {
+                id: "inner_strength_3",
+                text: "You are stronger than any challenge that comes your way",
+                category: "Inner Strength & Resilience", 
+                themes: ["power", "resilience", "courage"],
+                emotional_tags: ["strong", "resilient", "powerful", "courageous", "brave"],
+                relevance_score: 0.87
+            },
+            {
+                id: "self_care_2",
+                text: "You deserve the same kindness you give to others",
+                category: "Self-Care & Nurturing",
+                themes: ["compassion", "nurturing", "self-love"],
+                emotional_tags: ["gentle", "caring", "nurturing", "loving", "supportive"],
+                relevance_score: 0.91
+            },
+            {
+                id: "present_moment_1",
+                text: "You are exactly where you need to be in this cosmic moment",
+                category: "Present Moment Awareness",
+                themes: ["mindfulness", "grounding", "awareness"],
+                emotional_tags: ["calm", "centered", "peaceful", "aware", "present"],
+                relevance_score: 0.83
+            },
+            {
+                id: "cosmic_connection_1",
+                text: "You are a beautiful expression of universal consciousness",
+                category: "Cosmic Connection",
+                themes: ["universe", "connection", "spirituality"],
+                emotional_tags: ["expansive", "connected", "spiritual", "universal", "divine"],
+                relevance_score: 0.79
+            }
+        ];
+
+        // Simulate semantic search with mock relevance scoring
+        function mockSemanticSearch(query) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Simple keyword matching for demo purposes
+                    // In real implementation, this would use OpenAI embeddings
+                    const results = mockAffirmations.map(affirmation => {
+                        let score = 0;
+                        const queryLower = query.toLowerCase();
+                        
+                        // Basic scoring based on themes and emotional tags
+                        if (queryLower.includes('work') || queryLower.includes('deadline') || queryLower.includes('overwhelm')) {
+                            if (affirmation.themes.includes('balance') || affirmation.themes.includes('harmony')) score += 0.8;
+                        }
+                        if (queryLower.includes('confidence') || queryLower.includes('doubt')) {
+                            if (affirmation.themes.includes('power') || affirmation.themes.includes('resilience')) score += 0.9;
+                        }
+                        if (queryLower.includes('anxious') || queryLower.includes('anxiety')) {
+                            if (affirmation.themes.includes('mindfulness') || affirmation.themes.includes('grounding')) score += 0.85;
+                        }
+                        if (queryLower.includes('exhausted') || queryLower.includes('burnout') || queryLower.includes('taking care')) {
+                            if (affirmation.themes.includes('compassion') || affirmation.themes.includes('self-love')) score += 0.9;
+                        }
+                        if (queryLower.includes('lonely') || queryLower.includes('disconnected') || queryLower.includes('isolated')) {
+                            if (affirmation.themes.includes('connection') || affirmation.themes.includes('universe')) score += 0.85;
+                        }
+                        
+                        // Add base relevance and some randomness for demo
+                        score += 0.3 + Math.random() * 0.2;
+                        
+                        return { ...affirmation, relevance_score: Math.min(score, 1) };
+                    })
+                    .filter(result => result.relevance_score > 0.4)
+                    .sort((a, b) => b.relevance_score - a.relevance_score)
+                    .slice(0, 3);
+                    
+                    resolve({
+                        results,
+                        query,
+                        total_found: results.length,
+                        processing_time_ms: 45 + Math.random() * 30,
+                        source: 'mock_demo'
+                    });
+                }, 800); // Simulate API delay
+            });
+        }
+
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                showStatus('Please enter a search query', 'error');
+                return;
+            }
+
+            showStatus('🔍 Searching for semantically similar affirmations...', 'loading');
+            document.getElementById('resultsContainer').innerHTML = '';
+
+            try {
+                const response = await mockSemanticSearch(query);
+                
+                showStatus(`✅ Found ${response.total_found} relevant affirmations in ${response.processing_time_ms.toFixed(1)}ms`, 'success');
+                
+                if (response.results.length === 0) {
+                    document.getElementById('resultsContainer').innerHTML = 
+                        '<div class="fallback-notice">No close matches found. Try rephrasing your query or use different keywords.</div>';
+                    return;
+                }
+
+                displayResults(response.results);
+                
+            } catch (error) {
+                showStatus('❌ Search failed. In a real app, this would fall back to category-based search.', 'error');
+                console.error('Search error:', error);
+            }
+        }
+
+        function displayResults(results) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = results.map(result => `
+                <div class="result-item">
+                    <div class="affirmation-text">"${result.text}"</div>
+                    <div class="metadata">
+                        <span class="score">Relevance: ${(result.relevance_score * 100).toFixed(0)}%</span>
+                        <span class="category">${result.category}</span>
+                        <span class="themes">Themes: ${result.themes.join(', ')}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showStatus(message, type) {
+            const container = document.getElementById('statusContainer');
+            container.innerHTML = `<div class="status ${type}">${message}</div>`;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 3000);
+            }
+        }
+
+        function searchExample(query) {
+            document.getElementById('searchInput').value = query;
+            performSearch();
+        }
+
+        // Auto-focus search input
+        document.getElementById('searchInput').focus();
+        
+        // Allow Enter key to search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>

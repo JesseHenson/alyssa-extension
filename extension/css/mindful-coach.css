@@ -1,0 +1,451 @@
+/* Cosmic Tab Coach - Mindful Coach Styles */
+@import url('../cosmic-theme.css');
+
+.mindful-coach-container {
+    background: var(--gradient-glass-primary);
+    border-radius: var(--radius-3xl);
+    padding: var(--space-5);
+    margin: var(--space-5) 0;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.mindful-coach-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+    animation: cosmic-pulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes cosmic-pulse {
+    0%, 100% { transform: scale(0.8) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.2) rotate(180deg); opacity: 0.6; }
+}
+
+.mindful-coach-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.mindful-coach-icon {
+    font-size: 24px;
+    animation: gentle-glow 3s ease-in-out infinite;
+}
+
+@keyframes gentle-glow {
+    0%, 100% { text-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+    50% { text-shadow: 0 0 15px rgba(102, 126, 234, 0.8); }
+}
+
+.mindful-coach-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #667eea;
+    margin: 0;
+}
+
+.mindful-coach-subtitle {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+    font-style: italic;
+}
+
+.mindful-coach-chat {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.mindful-coach-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.mindful-coach-message {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-2xl);
+    max-width: 85%;
+    word-wrap: break-word;
+    position: relative;
+    animation: message-appear 0.3s ease-out;
+}
+
+@keyframes message-appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.mindful-coach-message.user {
+    background: var(--gradient-primary);
+    color: var(--color-text-inverse);
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.mindful-coach-message.coach {
+    background: var(--gradient-feature);
+    color: var(--color-text-inverse);
+    align-self: flex-start;
+    position: relative;
+}
+
+.mindful-coach-message.coach::before {
+    content: '🌟';
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(1); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.1); }
+}
+
+.mindful-coach-input-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.mindful-coach-input {
+    flex: 1;
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: var(--radius-4xl);
+    font-size: var(--font-size-md);
+    outline: none;
+    transition: var(--transition-all);
+    background: var(--color-bg-glass);
+}
+
+.mindful-coach-input:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+    background: var(--color-bg-primary);
+}
+
+.mindful-coach-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.mindful-coach-send {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.mindful-coach-send:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.mindful-coach-send:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mindful-coach-intervention {
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));
+    border: 2px solid rgba(240, 147, 251, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    position: relative;
+    animation: intervention-glow 2s ease-in-out infinite;
+}
+
+@keyframes intervention-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(240, 147, 251, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(240, 147, 251, 0.5); }
+}
+
+.mindful-coach-intervention h4 {
+    color: #764ba2;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mindful-coach-intervention p {
+    color: #666;
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.mindful-coach-intervention-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mindful-coach-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mindful-coach-btn.primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.mindful-coach-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.mindful-coach-btn.secondary {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.mindful-coach-btn.secondary:hover {
+    background: rgba(102, 126, 234, 0.2);
+}
+
+.mindful-coach-intervention-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.mindful-coach-intervention-content {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mindful-coach-intervention-content::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #f093fb, #f5576c, #667eea, #764ba2);
+    border-radius: 22px;
+    z-index: -1;
+    animation: cosmic-border 3s linear infinite;
+}
+
+@keyframes cosmic-border {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.mindful-coach-intervention-steps {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.mindful-coach-intervention-step {
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+}
+
+.mindful-coach-intervention-step.active {
+    opacity: 1;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.mindful-coach-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.mindful-coach-close:hover {
+    opacity: 1;
+}
+
+.mindful-coach-stress-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 10px;
+}
+
+.mindful-coach-stress-indicator.low {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.mindful-coach-stress-indicator.medium {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.mindful-coach-stress-indicator.high {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+}
+
+.mindful-coach-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.mindful-coach-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.mindful-coach-typing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(240, 147, 251, 0.1);
+    border-radius: 18px;
+    max-width: 150px;
+    margin: 5px 0;
+}
+
+.mindful-coach-typing-text {
+    color: #764ba2;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.mindful-coach-typing-dots {
+    display: flex;
+    gap: 3px;
+}
+
+.mindful-coach-typing-dot {
+    width: 6px;
+    height: 6px;
+    background: #764ba2;
+    border-radius: 50%;
+    animation: typing-bounce 1.4s infinite;
+}
+
+.mindful-coach-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.mindful-coach-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mindful-coach-container {
+        margin: 10px 0;
+        padding: 15px;
+    }
+    
+    .mindful-coach-chat {
+        min-height: 150px;
+        max-height: 300px;
+    }
+    
+    .mindful-coach-intervention-content {
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .mindful-coach-toggle {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}

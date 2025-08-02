@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Tab Coach - Theme Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+        }
+
+        .showcase-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .theme-preview {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .theme-preview:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .theme-content {
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .theme-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .theme-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .theme-affirmation {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        .theme-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 300;
+            opacity: 0.8;
+            z-index: 10;
+            position: relative;
+        }
+
+        .theme-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            color: #333;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .theme-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .theme-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .premium-badge {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Theme Specific Styles */
+        .cosmic {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .nature {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .minimal {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        .sunset {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #333;
+        }
+
+        .ocean {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .forest {
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            color: white;
+        }
+
+        .midnight {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: white;
+        }
+
+        .aurora {
+            background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
+            color: #333;
+        }
+
+        .sakura {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+        }
+
+        .cosmic-purple {
+            background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%);
+            color: white;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .cta-section {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .themes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-content {
+                height: 200px;
+                padding: 1.5rem;
+            }
+            
+            .theme-affirmation {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="cosmic-tab-main.html" class="back-button">← Back to Tab</a>
+
+    <div class="showcase-container">
+        <div class="header">
+            <h1>🎨 Theme Showcase</h1>
+            <p>Explore the beautiful variety of themes available in Cosmic Tab Coach. Each theme creates a unique atmosphere for your mindful moments.</p>
+        </div>
+
+        <div class="themes-grid">
+            <!-- Free Themes -->
+            <div class="theme-preview" onclick="previewTheme('cosmic')">
+                <div class="theme-content cosmic">
+                    <div class="theme-stars" id="cosmic-stars"></div>
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">You are stardust experiencing the universe</div>
+                    <div class="theme-category">Cosmic Connection</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Cosmic Calm
+                        <span style="background: #4CAF50; color: white; padding: 0.2rem 0.5rem; border-radius: 8px; font-size: 0.7rem;">FREE</span>
+                    </div>
+                    <div class="theme-description">Deep space gradients with twinkling stars. Perfect for contemplating your place in the universe.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="previewTheme('nature')">
+                <div class="theme-content nature">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Grow like a tree, rooted yet reaching</div>
+                    <div class="theme-category">Natural Wisdom</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Nature Serenity
+                        <span style="background: #4CAF50; color: white; padding: 0.2rem 0.5rem; border-radius: 8px; font-size: 0.7rem;">FREE</span>
+                    </div>
+                    <div class="theme-description">Fresh greens and natural tones. Connect with the grounding energy of nature.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="previewTheme('minimal')">
+                <div class="theme-content minimal">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Simplicity is the ultimate sophistication</div>
+                    <div class="theme-category">Mindful Focus</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Minimal Focus
+                        <span style="background: #4CAF50; color: white; padding: 0.2rem 0.5rem; border-radius: 8px; font-size: 0.7rem;">FREE</span>
+                    </div>
+                    <div class="theme-description">Clean, distraction-free design. Ideal for deep focus and clarity.</div>
+                </div>
+            </div>
+
+            <!-- Premium Themes -->
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content sunset">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Every sunset is a new beginning</div>
+                    <div class="theme-category">Renewal & Hope</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Sunset Glow
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Warm, golden hues that evoke peaceful endings and hopeful beginnings.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content ocean">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Flow like water, adapt to any shape</div>
+                    <div class="theme-category">Flexibility & Flow</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Ocean Breeze
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Calming aqua tones that bring the tranquility of ocean waves to your browser.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content forest">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Find peace in the forest of your mind</div>
+                    <div class="theme-category">Inner Sanctuary</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Forest Sanctuary
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Deep forest greens that create a sense of hidden, peaceful refuge.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content midnight">
+                    <div class="theme-stars" id="midnight-stars"></div>
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">In darkness, we find our inner light</div>
+                    <div class="theme-category">Inner Strength</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Midnight Wisdom
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Sophisticated dark theme perfect for late-night reflection and focus.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content aurora">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Dance with the lights of possibility</div>
+                    <div class="theme-category">Wonder & Magic</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Aurora Dreams
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Ethereal northern lights colors that inspire wonder and possibility.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content sakura">
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">Bloom where you are planted</div>
+                    <div class="theme-category">Growth & Beauty</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Sakura Spring
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Soft cherry blossom tones celebrating new beginnings and gentle growth.</div>
+                </div>
+            </div>
+
+            <div class="theme-preview" onclick="showPremiumPrompt()">
+                <div class="theme-content cosmic-purple">
+                    <div class="theme-stars" id="cosmic-purple-stars"></div>
+                    <div class="theme-logo">COSMIC TAB COACH</div>
+                    <div class="theme-affirmation">You are magic made manifest</div>
+                    <div class="theme-category">Personal Power</div>
+                </div>
+                <div class="theme-info">
+                    <div class="theme-name">
+                        Cosmic Magic
+                        <span class="premium-badge">Premium</span>
+                    </div>
+                    <div class="theme-description">Mystical purples and greens that awaken your inner cosmic magic.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 style="margin-bottom: 1rem;">Unlock All Premium Themes</h2>
+            <p style="opacity: 0.8; margin-bottom: 1rem;">Transform your browsing experience with 10+ beautiful premium themes, plus new seasonal collections added monthly.</p>
+            <button class="cta-button" onclick="upgradeToPremium()">
+                ✨ Upgrade to Premium - $2.99
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Create stars for cosmic themes
+        function createStars(containerId, count = 30) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'theme-star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        function previewTheme(themeName) {
+            alert(`🎨 Previewing ${themeName} theme!\n\nThis would show a full-screen preview of the theme with sample affirmations.`);
+        }
+
+        function showPremiumPrompt() {
+            alert(`🌟 Premium Theme\n\nUpgrade to unlock this beautiful theme plus:\n\n✨ 10+ Premium Themes\n🎵 Audio Affirmations\n🎯 Advanced Personalization\n📊 Wellness Insights\n\n$2.99 one-time or $0.99/month`);
+        }
+
+        function upgradeToPremium() {
+            alert(`🚀 Upgrading to Premium!\n\nYou'll unlock:\n• All premium themes\n• Audio affirmations\n• Advanced AI personalization\n• Wellness insights\n• New monthly content\n\n✨ $2.99 one-time or $0.99/month`);
+        }
+
+        // Initialize stars
+        createStars('cosmic-stars', 30);
+        createStars('midnight-stars', 40);
+        createStars('cosmic-purple-stars', 35);
+    </script>
+</body>
+</html>
